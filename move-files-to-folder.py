@@ -11,8 +11,12 @@ import time
 class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
         for filename in os.listdir(folder_to_track):
+            split_tup = os.path.splitext(filename)
             src = folder_to_track + "/" + filename
-            new_destination = folder_destination + "/" + filename
+            folder_name = split_tup[1].replace(".", "")
+            if not os.path.exists(folder_destination + "/" + folder_name):
+                os.makedirs(folder_destination + "/" + folder_name)
+            new_destination = folder_destination + "/" + folder_name + "/" + filename
             os.rename(src, new_destination)
 
 
