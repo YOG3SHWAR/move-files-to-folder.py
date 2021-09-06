@@ -16,12 +16,17 @@ class MyHandler(FileSystemEventHandler):
             folder_name = split_tup[1].replace(".", "")
             if not os.path.exists(folder_destination + "/" + folder_name):
                 os.makedirs(folder_destination + "/" + folder_name)
-            new_destination = folder_destination + "/" + folder_name + "/" + filename
+            if split_tup != "":
+                new_destination = (
+                    folder_destination + "/" + folder_name + "/" + filename
+                )
+            else:
+                new_destination = folder_destination + "/" + filename
             os.rename(src, new_destination)
 
 
-folder_to_track = "/home/ogeshwary/Projects/test/1"
-folder_destination = "/home/ogeshwary/Projects/test/23"
+folder_to_track = "/home/ogeshwary/Downloads"
+folder_destination = "/home/ogeshwary/Downloads"
 event_handler = MyHandler()
 observer = Observer()
 observer.schedule(event_handler, folder_to_track, recursive=True)
